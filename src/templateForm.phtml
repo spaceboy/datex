@@ -1,0 +1,71 @@
+<?php
+    echo '<?php';
+?>
+
+/**
+ * Base form generated on db table "<?php echo $data['table']; ?>".
+ * @author <?php echo \get_current_user(); ?>
+
+ */
+
+namespace <?php echo $data['namespace']; ?>;
+
+use Nette\Application\UI\Form;
+use Nette\ComponentModel\IContainer;
+use Nette\Utils\ArrayHash;
+use <?php echo $model->getConfig()[static::TYPE_MODEL]['namespace']; ?>\<?php echo $modelName; ?>;
+
+class <?php echo $data['objectName']; ?> extends Form {
+
+    /**
+     * Class constructor.
+     * @param ?IContainer $parent
+     * @param ?string $name = null
+     */
+    public function __construct(?IContainer $parent = null, ?string $name = null)
+    {
+        parent::__construct($parent, $name);
+        $this->onSuccess[] = [$this, 'formSucceeded'];
+        $this->onSubmit[] = [$this, 'formSubmit'];
+<?php
+    foreach ($data['columns'] as $column) {
+        $type = static::convertType2php($column['nativetype']);
+        $name = static::convertName2php($column['name']);
+?>
+
+        $this-><?php echo static::INPUT_LIST[$column['nativetype']]; ?>('<?php echo $name; ?>', '<?php echo $name; ?>');
+<?php } ?>
+
+        $this->addSubmit('submit', 'Submit');
+    }
+
+    /**
+     * Method called when form succeeded (form submitted and passed all validations).
+     * @return void
+     */
+    protected function formSucceeded(Form $form, ArrayHash $data): void
+    {
+    }
+
+    /**
+     * Method called when a validation fails (after form submission).
+     * @return void
+     */
+    public function formError(Form $form): void
+    {
+        /*
+        if ($this->presenter !== null) {
+            $this->presenter->flashMessage('Invalid value(s).', 'error');
+        }
+        */
+    }
+
+    /**
+     * Method called when form is submitted.
+     * @return void
+     */
+    protected function formSubmit(Form $form): void
+    {
+    }
+
+}

@@ -1,0 +1,56 @@
+<?php
+    echo '<?php';
+?>
+
+/**
+ * PHP entity on table "<?php echo $data['table']; ?>".
+ * @author <?php echo \get_current_user(); ?>
+
+ */
+
+namespace <?php echo $data['namespace']; ?>;
+
+class <?php echo $data['objectName']; ?> {
+
+<?php
+    foreach ($data['columns'] as $column) {
+        $type = static::convertType2php($column['nativetype']);
+        $name = static::convertName2php($column['name']);
+?>
+    /** @var <?php echo $type; ?> $<?php echo $name; ?> */
+    private <?php echo $type; ?> $<?php echo $name; ?>;
+
+<?php
+}
+    foreach ($data['columns'] as $column) {
+        $type = static::convertType2php($column['nativetype']);
+        $name = static::convertName2php($column['name']);
+?>
+    /**
+     * <?php echo $column['name']; ?> setter.
+     * @param <?php echo $type; ?> $<?php echo $name; ?>
+
+     * @return <?php echo $data['objectName']; ?>
+
+     */
+    public function set<?php echo ucfirst($name); ?>(<?php echo $type; ?> $<?php echo $name ?>): <?php echo $data['objectName']; ?>
+
+    {
+        $this-><?php echo $name; ?> = $<?php echo $name; ?>;
+        return $this;
+    }
+
+    /**
+     * <?php echo $name; ?> getter.
+     * @return <?php echo $type; ?>
+
+     */
+    public function get<?php echo ucfirst($name); ?>(): <?php echo $type; ?>
+
+    {
+        $this-><?php echo $name; ?> = $<?php echo $name; ?>;
+        return $this;
+    }
+
+<?php } ?>
+}
