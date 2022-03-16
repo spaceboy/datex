@@ -1,7 +1,9 @@
 <?php
 namespace Spaceboy\Datex;
 
+
 use Nette\Database\Explorer;
+
 
 class DatexModel {
 
